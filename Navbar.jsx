@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
-
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 //Currently useless data
 
 //<Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text}/>
@@ -95,8 +95,24 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen style={styles.HomeColor} name="Home" component={HomeScreen} />
+      <Tab.Navigator 
+      screenOptions = {{tabBarStyle: { backgroundColor: '#344CB7'}}}
+      initialRouteName="Home"
+      activeColor="#f0edf6"
+      inactiveColor="#3e2465"
+      barStyle={{ backgroundColor: '#000957'}}>
+        <Tab.Screen options={{
+          
+          title: 'GOLDx',
+          headerStyle: {
+            backgroundColor: '#344CB7',
+          },
+          headerTintColor: '#EBE645',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 40,
+          },
+        }} name="Home" component={HomeScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
@@ -114,7 +130,5 @@ const styles = StyleSheet.create({
   text: { paddingLeft: 60,
         fontSize:15
   },
-  HomeColor: {
-    backgroundColor: "#040303",
-  }
+  
 });
