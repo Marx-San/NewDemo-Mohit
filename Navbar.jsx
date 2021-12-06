@@ -29,7 +29,7 @@ export default function App() {
     })
 
     var myHeaders = new Headers();
-  myHeaders.append("x-access-token", "goldapi-pnlotkwtgqz45-io");
+  myHeaders.append("x-access-token", "goldapi-pnltkwtgqz45a-io");
   myHeaders.append("Content-Type", "application/json");
   
   var requestOptions = {
@@ -41,7 +41,9 @@ export default function App() {
     setInterval(() => {
       fetch("https://www.goldapi.io/api/XAU/INR", requestOptions)
       .then(response => response.json())
-      .then(result => {setData(result);})
+      .then(result => {
+        console.log(result);
+        setData(result);})
       .catch(error => console.log('error', error));
     }, 5000);
   }, []);
@@ -66,14 +68,14 @@ export default function App() {
         <Text style={{padding:10,fontSize:30}}>Live Rate</Text>
         <Table borderStyle={{borderWidth: 0}} >
           <Row data={live.tableHead} style={{backgroundColor: 'black',height:30,borderWidth:0.5}} textStyle={{paddingLeft: 60,fontSize:20,color:"white"}}/>
-          <Row data={live.tableGold} style={{borderWidth:0.7}} textStyle={styles.text}/>
-          <Row data={live.tableSilver} style={{borderWidth:0.7}} textStyle={styles.text}/>
+          <Row data={["Gold",data.price]} style={{borderWidth:0.7}} textStyle={styles.text}/>
+          <Row data={["Silver", silverdata.price]} style={{borderWidth:0.7}} textStyle={styles.text}/>
         </Table>
         <Text style={{padding:10,fontSize:30}}>Comex Rate</Text>
         <Table borderStyle={{borderWidth: 0}} >
           <Row data={comex.tableHead} textStyle={{fontSize:20,textAlign:"center",color:"white"}} style={{borderWidth:0.7,backgroundColor:"black"}}/>
-          <Row data={comex.tableGold} textStyle={{textAlign:"center"}} style={{borderWidth:0.7}}/>
-          <Row data={comex.tableSilver} textStyle={{textAlign:"center"}} style={{borderWidth:0.7}}/>
+          <Row data={['Gold Comex',data.bid,data.ask,data.high_price,data.low_price]} textStyle={{textAlign:"center"}} style={{borderWidth:0.7}}/>
+          <Row data={['Silver Comex',silverdata.bid,silverdata.ask,silverdata.high_price,silverdata.low_price]} textStyle={{textAlign:"center"}} style={{borderWidth:0.7}}/>
         </Table>
       </View>
     )
@@ -94,7 +96,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen style={styles.HomeColor} name="Home" component={HomeScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
@@ -111,5 +113,8 @@ const styles = StyleSheet.create({
   row: {  height: 50  },
   text: { paddingLeft: 60,
         fontSize:15
+  },
+  HomeColor: {
+    backgroundColor: "#040303",
   }
 });
