@@ -7,6 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 //Currently useless data
 
 //<Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text}/>
@@ -29,7 +31,7 @@ export default function App() {
     })
 
     var myHeaders = new Headers();
-  myHeaders.append("x-access-token", "goldapi-pnltkwtgqz45a-io");
+  myHeaders.append("x-access-token", "goldapi-10dp2dtkwuyurbz-io");
   myHeaders.append("Content-Type", "application/json");
   
   var requestOptions = {
@@ -67,13 +69,13 @@ export default function App() {
       <View style={styles.container} >
         <Text style={{padding:10,fontSize:30}}>Live Rate</Text>
         <Table borderStyle={{borderWidth: 0}} >
-          <Row data={live.tableHead} style={{backgroundColor: 'black',height:30,borderWidth:0.5}} textStyle={{paddingLeft: 60,fontSize:20,color:"white"}}/>
+          <Row data={live.tableHead} style={{backgroundColor: '#000957',height:30,borderWidth:0.5}} textStyle={{paddingLeft: 60,fontSize:20,color:"white"}}/>
           <Row data={["Gold",data.price]} style={{borderWidth:0.7}} textStyle={styles.text}/>
           <Row data={["Silver", silverdata.price]} style={{borderWidth:0.7}} textStyle={styles.text}/>
         </Table>
         <Text style={{padding:10,fontSize:30}}>Comex Rate</Text>
         <Table borderStyle={{borderWidth: 0}} >
-          <Row data={comex.tableHead} textStyle={{fontSize:20,textAlign:"center",color:"white"}} style={{borderWidth:0.7,backgroundColor:"black"}}/>
+          <Row data={comex.tableHead} textStyle={{fontSize:20,textAlign:"center",color:"white"}} style={{borderWidth:0.7,backgroundColor:"#000957"}}/>
           <Row data={['Gold Comex',data.bid,data.ask,data.high_price,data.low_price]} textStyle={{textAlign:"center"}} style={{borderWidth:0.7}}/>
           <Row data={['Silver Comex',silverdata.bid,silverdata.ask,silverdata.high_price,silverdata.low_price]} textStyle={{textAlign:"center"}} style={{borderWidth:0.7}}/>
         </Table>
@@ -102,7 +104,11 @@ export default function App() {
       inactiveColor="#3e2465"
       barStyle={{ backgroundColor: '#000957'}}>
         <Tab.Screen options={{
-          
+          tabBarLabel: '',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={'gold'} size={26} />
+          ),
+
           title: 'GOLDx',
           headerStyle: {
             backgroundColor: '#344CB7',
@@ -113,7 +119,22 @@ export default function App() {
             fontSize: 40,
           },
         }} name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="wrench" color={'gold'} size={26} />
+          ),
+
+          title: 'GOLDx',
+          headerStyle: {
+            backgroundColor: '#344CB7',
+          },
+          headerTintColor: '#EBE645',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 40,
+          },
+        }}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
