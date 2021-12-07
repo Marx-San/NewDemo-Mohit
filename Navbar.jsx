@@ -13,8 +13,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 //<Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text}/>
 
-
-
 export default function App() {
    
     let [data,setData]=useState({});
@@ -31,7 +29,7 @@ export default function App() {
     })
 
     var myHeaders = new Headers();
-  myHeaders.append("x-access-token", "goldapi-10dp2dtkwuyurbz-io");
+  myHeaders.append("x-access-token", "goldapi-19nvhntkwvyf2mu-io"); // api key
   myHeaders.append("Content-Type", "application/json");
   
   var requestOptions = {
@@ -39,6 +37,30 @@ export default function App() {
     headers: myHeaders,
     redirect: 'follow'
   };
+
+
+  //Initialize
+
+  useEffect(() => {
+    fetch("https://www.goldapi.io/api/XAG/INR", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+      setsilverdata(result);})
+    .catch(error => console.log('error', error));
+}, []);
+
+useEffect(() => {
+    fetch("https://www.goldapi.io/api/XAU/INR", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+      setData(result);})
+    .catch(error => console.log('error', error));
+}, []);
+
+//Time intervals
+
   useEffect(() => {
     setInterval(() => {
       fetch("https://www.goldapi.io/api/XAU/INR", requestOptions)
@@ -47,16 +69,18 @@ export default function App() {
         console.log(result);
         setData(result);})
       .catch(error => console.log('error', error));
-    }, 5000);
+    }, 60000);
   }, []);
 
   useEffect(() => {
     setInterval(() => {
       fetch("https://www.goldapi.io/api/XAG/INR", requestOptions)
       .then(response => response.json())
-      .then(result => {setsilverdata(result);})
+      .then(result => {
+        console.log(result);
+        setsilverdata(result);})
       .catch(error => console.log('error', error));
-    }, 5000);
+    }, 60000);
   }, []);
  
 
@@ -87,6 +111,14 @@ export default function App() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Settings!</Text>
+      </View>
+    );
+  }
+
+  function AccountsScreen() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>My Account!</Text>
       </View>
     );
   }
@@ -123,6 +155,22 @@ export default function App() {
           tabBarLabel: '',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="wrench" color={'gold'} size={26} />
+          ),
+
+          title: 'GOLDx',
+          headerStyle: {
+            backgroundColor: '#344CB7',
+          },
+          headerTintColor: '#EBE645',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 40,
+          },
+        }}/>
+        <Tab.Screen name="My Account" component={AccountsScreen} options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="email-newsletter" color={'gold'} size={26} />
           ),
 
           title: 'GOLDx',
